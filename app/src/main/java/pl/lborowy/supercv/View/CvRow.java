@@ -15,19 +15,20 @@ import android.widget.TextView;
  */
 
 public class CvRow extends LinearLayout {
-
+    private final Context context;
     private String text;
     private int imageId;
 
     public CvRow(Context context, String text, int imageId) {
         super(context);
+        this.context = context;
         this.text = text;
         this.imageId = imageId;
 
 
-        setupMainLayout(context);
-        ImageView imageView = setupImageView(context, imageId);
-        TextView textView = setupTextView(context, text);
+        setupMainLayout();
+        ImageView imageView = setupImageView(imageId);
+        TextView textView = setupTextView(text);
 
         addViews(imageView, textView);
 
@@ -39,35 +40,35 @@ public class CvRow extends LinearLayout {
     }
 
     @NonNull
-    private TextView setupTextView(Context context, String text) {
+    private TextView setupTextView(String text) {
         TextView textView = new TextView(context);
         textView.setText(text);
         LayoutParams textParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         textView.setLayoutParams(textParams);
         textView.setTextSize(16);
         textView.setGravity(Gravity.CENTER_VERTICAL);
-        textView.setPadding(dpToPx(context,32),0,0,0);
+        textView.setPadding(dpToPx(32),0,0,0);
         return textView;
     }
 
     @NonNull
-    private ImageView setupImageView(Context context, int imageId) {
+    private ImageView setupImageView(int imageId) {
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(imageId);
-        LayoutParams imageParams = new LayoutParams(dpToPx(context,24), dpToPx(context,24));
+        LayoutParams imageParams = new LayoutParams(dpToPx(24), dpToPx(24));
         imageParams.gravity = Gravity.CENTER_VERTICAL;
         imageView.setLayoutParams(imageParams);
         return imageView;
     }
 
-    private void setupMainLayout(Context context) {
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(context,48));
+    private void setupMainLayout() {
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(48));
         this.setLayoutParams(params);
         this.setOrientation(LinearLayout.HORIZONTAL);
-        this.setPadding(dpToPx(context,16), 0, dpToPx(context,16), 0);
+        this.setPadding(dpToPx(16), 0, dpToPx(16), 0);
     }
 
-    private int dpToPx(Context context, int dp) {
+    private int dpToPx(int dp) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);

@@ -2,6 +2,7 @@ package pl.lborowy.supercv.View;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -15,31 +16,30 @@ import android.widget.TextView;
 
 public class CvRow extends LinearLayout {
 
-    private String text; // TextView
-    private int imageId; // ImageView - R.id.ic_email_black_24.dp.xml
+    private String text;
+    private int imageId;
 
     public CvRow(Context context, String text, int imageId) {
         super(context);
-        this.text = text; // TextView
-        this.imageId = imageId; // ImageView
+        this.text = text;
+        this.imageId = imageId;
 
-        // prostokąt(layout) (szerokość na matchParent i wysokość na 48)
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(context,48));
-        this.setLayoutParams(params);
-        // orientacja w LinearLayout HORIZONTAL
-        this.setOrientation(LinearLayout.HORIZONTAL);
-        // padding layoutu
-        this.setPadding(dpToPx(context,16), 0, dpToPx(context,16), 0);
 
-        ImageView imageView = new ImageView(context); // obiekt ImageView przyjmuje context
-        imageView.setImageResource(imageId); //
-        LayoutParams imageParams = new LayoutParams(dpToPx(context,24), dpToPx(context,24)); // *1 ustawienie rozmiarów Layoutu dla rys (24px/24px)
-        imageParams.gravity = Gravity.CENTER_VERTICAL; // ustawienie gravity dla ImageView
-        imageView.setLayoutParams(imageParams); // inicjacja *1
+        setupMainLayout(context);
+        ImageView imageView = setupImageView(context, imageId);
+        TextView textView = setupTextView(context, text);
 
-        // dodawanie widoku ImageView
+        addViews(imageView, textView);
+
+    }
+
+    private void addViews(ImageView imageView, TextView textView) {
         this.addView(imageView);
+        this.addView(textView);
+    }
 
+    @NonNull
+    private TextView setupTextView(Context context, String text) {
         TextView textView = new TextView(context);
         textView.setText(text);
         LayoutParams textParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -47,9 +47,24 @@ public class CvRow extends LinearLayout {
         textView.setTextSize(16);
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setPadding(dpToPx(context,32),0,0,0);
+        return textView;
+    }
 
-        this.addView(textView);
+    @NonNull
+    private ImageView setupImageView(Context context, int imageId) {
+        ImageView imageView = new ImageView(context);
+        imageView.setImageResource(imageId);
+        LayoutParams imageParams = new LayoutParams(dpToPx(context,24), dpToPx(context,24));
+        imageParams.gravity = Gravity.CENTER_VERTICAL;
+        imageView.setLayoutParams(imageParams);
+        return imageView;
+    }
 
+    private void setupMainLayout(Context context) {
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(context,48));
+        this.setLayoutParams(params);
+        this.setOrientation(LinearLayout.HORIZONTAL);
+        this.setPadding(dpToPx(context,16), 0, dpToPx(context,16), 0);
     }
 
     private int dpToPx(Context context, int dp) {

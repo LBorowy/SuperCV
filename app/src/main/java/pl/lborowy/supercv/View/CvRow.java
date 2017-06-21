@@ -1,6 +1,8 @@
 package pl.lborowy.supercv.View;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,16 +24,16 @@ public class CvRow extends LinearLayout {
         this.imageId = imageId; // ImageView
 
         // prostokąt(layout) (szerokość na matchParent i wysokość na 48)
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 48);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(context,48));
         this.setLayoutParams(params);
         // orientacja w LinearLayout HORIZONTAL
         this.setOrientation(LinearLayout.HORIZONTAL);
         // padding layoutu
-        this.setPadding(16, 0, 16, 0);
+        this.setPadding(dpToPx(context,16), 0, dpToPx(context,16), 0);
 
         ImageView imageView = new ImageView(context); // obiekt ImageView przyjmuje context
         imageView.setImageResource(imageId); //
-        LayoutParams imageParams = new LayoutParams(24, 24); // *1 ustawienie rozmiarów Layoutu dla rys (24px/24px)
+        LayoutParams imageParams = new LayoutParams(dpToPx(context,24), dpToPx(context,24)); // *1 ustawienie rozmiarów Layoutu dla rys (24px/24px)
         imageParams.gravity = Gravity.CENTER_VERTICAL; // ustawienie gravity dla ImageView
         imageView.setLayoutParams(imageParams); // inicjacja *1
 
@@ -44,10 +46,17 @@ public class CvRow extends LinearLayout {
         textView.setLayoutParams(textParams);
         textView.setTextSize(16);
         textView.setGravity(Gravity.CENTER_VERTICAL);
-        textView.setPadding(32,0,0,0);
+        textView.setPadding(dpToPx(context,32),0,0,0);
 
         this.addView(textView);
 
+    }
+
+    private int dpToPx(Context context, int dp) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return (int) px;
     }
 
 }

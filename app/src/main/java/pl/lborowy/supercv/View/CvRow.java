@@ -16,19 +16,22 @@ import android.widget.TextView;
 
 public class CvRow extends LinearLayout {
     private final Context context;
-    private String text;
-    private int imageId;
+    private final DisplayMetrics metrics;
+    private final Resources resources;
+    private final String text;
+    private final int imageId;
 
     public CvRow(Context context, String text, int imageId) {
         super(context);
         this.context = context;
         this.text = text;
         this.imageId = imageId;
-
+        resources = context.getResources();
+        metrics = resources.getDisplayMetrics();
 
         setupMainLayout();
-        ImageView imageView = setupImageView(imageId);
-        TextView textView = setupTextView(text);
+        ImageView imageView = setupImageView();
+        TextView textView = setupTextView();
 
         addViews(imageView, textView);
 
@@ -40,19 +43,19 @@ public class CvRow extends LinearLayout {
     }
 
     @NonNull
-    private TextView setupTextView(String text) {
+    private TextView setupTextView() {
         TextView textView = new TextView(context);
         textView.setText(text);
         LayoutParams textParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         textView.setLayoutParams(textParams);
         textView.setTextSize(16);
         textView.setGravity(Gravity.CENTER_VERTICAL);
-        textView.setPadding(dpToPx(32),0,0,0);
+        textView.setPadding(dpToPx(32), 0, 0, 0);
         return textView;
     }
 
     @NonNull
-    private ImageView setupImageView(int imageId) {
+    private ImageView setupImageView() {
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(imageId);
         LayoutParams imageParams = new LayoutParams(dpToPx(24), dpToPx(24));
@@ -69,9 +72,7 @@ public class CvRow extends LinearLayout {
     }
 
     private int dpToPx(int dp) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return (int) px;
     }
 

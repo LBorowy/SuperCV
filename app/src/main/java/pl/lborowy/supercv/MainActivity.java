@@ -45,11 +45,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 makeCall();
-                sendMail();
-                openWebsite();
-
             }
         });
+
+        mailRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMail();
+            }
+        });
+
+        webRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebsite();
+            }
+        });
+
     }
 
     public void makeCall() {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_contact"
+        android:icon="@drawable/icc_local_phone_black_24dp"
+        android:title="Kontakt" />
+
+    <item
+        android:id="@+id/menu_skills"
+        android:icon="@drawable/ic_build_black_24dp"
+        android:title="Umiejętności" />
+
+
+    <item
+        android:id="@+id/menu_experience"
+        android:icon="@drawable/ic_computer_black_24dp"
+        android:title="Doświadczenie" />
+
+</menu>

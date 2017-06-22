@@ -17,7 +17,6 @@ import android.widget.TextView;
 public class CvRow extends LinearLayout {
     private final Context context;
     private final DisplayMetrics metrics;
-    private final Resources resources;
     private final String text;
     private final int imageId;
 
@@ -26,12 +25,13 @@ public class CvRow extends LinearLayout {
         this.context = context;
         this.text = text;
         this.imageId = imageId;
-        resources = context.getResources();
+
+        Resources resources = context.getResources();
         metrics = resources.getDisplayMetrics();
 
         setupMainLayout();
-        ImageView imageView = setupImageView();
-        TextView textView = setupTextView();
+        ImageView imageView = createImageView();
+        TextView textView = createTextView();
 
         addViews(imageView, textView);
 
@@ -43,7 +43,7 @@ public class CvRow extends LinearLayout {
     }
 
     @NonNull
-    private TextView setupTextView() {
+    private TextView createTextView() {
         TextView textView = new TextView(context);
         textView.setText(text);
         LayoutParams textParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -55,7 +55,7 @@ public class CvRow extends LinearLayout {
     }
 
     @NonNull
-    private ImageView setupImageView() {
+    private ImageView createImageView() {
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(imageId);
         LayoutParams imageParams = new LayoutParams(dpToPx(24), dpToPx(24));

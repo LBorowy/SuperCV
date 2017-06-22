@@ -2,8 +2,11 @@ package pl.lborowy.supercv;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
 //    public static final String TAG = MainActivity.class.getSimpleName();
 
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.container)
     LinearLayout container;
 
 //    @BindView(R.id.textViewphoneNumber)
 //    TextView phoneNumber;
-    private String number;
 
 
 
@@ -31,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        // nowy toolbar zajmuje się tak jak poprzedni
+        setSupportActionBar(toolbar);
+
+        // hamburger (this, drawerLayout, toolbar, text dla os z dys ON, text dla os z dys OFF)
+        ActionBarDrawerToggle hamburger =
+                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        drawerLayout.addDrawerListener(hamburger);
+        hamburger.syncState();
 
         CvRow phoneRow = new CvRow(this, "(+48) 692 449 800", R.drawable.icc_local_phone_black_24dp);
         container.addView(phoneRow);

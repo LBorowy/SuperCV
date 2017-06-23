@@ -2,12 +2,19 @@ package pl.lborowy.supercv;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.container)
-    LinearLayout container;
+    FrameLayout container;
+    @BindView(R.id.navigationView)
+    NavigationView navigationView;
 
 //    @BindView(R.id.textViewphoneNumber)
 //    TextView phoneNumber;
-
 
 
     @Override
@@ -37,7 +45,101 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setupToolbar();
 
+        // przechodzenie z menu do kontenrów
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+//                if (item.getItemId() == R.id.menu_contact) {
+//                    getSupportFragmentManager() //wspomaganie starszych wersji
+//                            .beginTransaction()
+//                            .replace(R.id.container, ContactFragment.newInstance())
+//                            .commit();
+//                }
+//                else if (item.getItemId() == R.id.menu_skills) {
+//                    getSupportFragmentManager() //wspomaganie starszych wersji
+//                            .beginTransaction()
+//                            .replace(R.id.container, SkillsFragment.newInstance())
+//                            .commit();
+//                }
+//                else if (item.getItemId() == R.id.menu_experience) {
+//
+//                }
+                toolbar.setTitle(item.getTitle()); // tytuł itemka
+                item.setChecked(true); // podswietla w menu itemki
+
+                switch (item.getItemId()) {
+                    case R.id.menu_contact:
+                        openFragment(ContactFragment.newInstance());
+
+                        break;
+                    case R.id.menu_skills:
+                        openFragment(SkillsFragment.newInstance());
+                        break;
+                    case R.id.menu_experience:
+                        openFragment(ExperienceFragment.newInstance());
+                        break;
+                }
+                drawerLayout.closeDrawer(Gravity.LEFT);
+
+                return false;
+            }
+        });
+
+//        openFragment(ContactFragment.newInstance());
+
+
+
+
+//        CvRow phoneRow = new CvRow(this, "(+48) 692 449 800", R.drawable.icc_local_phone_black_24dp);
+//        container.addView(phoneRow);
+//
+//        CvRow mailRow = new CvRow(this, "lucas.borowy@gmail.com", R.drawable.icc_email_black_24dp);
+//        container.addView(mailRow);
+//
+//        CvRow webRow = new CvRow(this, "www.google.com", R.drawable.ic_public_black_24dp);
+//        container.addView(webRow);
+//
+//        phoneRow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                makeCall();
+//            }
+//        });
+//
+//        mailRow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendMail();
+//            }
+//        });
+//
+//        webRow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openWebsite();
+//            }
+//        });
+
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        navigationView.getMenu().performIdentifierAction(R.id.menu_contact, 0);
+    }
+
+    private void openFragment(Fragment fragment) {
+        // builder - zamien jedno z drugim i wywołaj
+        getSupportFragmentManager() //wspomaganie starszych wersji
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    private void setupToolbar() {
         // nowy toolbar zajmuje się tak jak poprzedni
         setSupportActionBar(toolbar);
 
@@ -46,37 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(hamburger);
         hamburger.syncState();
-
-        CvRow phoneRow = new CvRow(this, "(+48) 692 449 800", R.drawable.icc_local_phone_black_24dp);
-        container.addView(phoneRow);
-
-        CvRow mailRow = new CvRow(this, "lucas.borowy@gmail.com", R.drawable.icc_email_black_24dp);
-        container.addView(mailRow);
-
-        CvRow webRow = new CvRow(this, "www.google.com", R.drawable.ic_public_black_24dp);
-        container.addView(webRow);
-
-        phoneRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeCall();
-            }
-        });
-
-        mailRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMail();
-            }
-        });
-
-        webRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWebsite();
-            }
-        });
-
     }
 
     public void makeCall() {

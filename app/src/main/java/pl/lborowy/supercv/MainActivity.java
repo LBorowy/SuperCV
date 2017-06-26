@@ -2,7 +2,6 @@ package pl.lborowy.supercv;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,21 +10,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import pl.lborowy.supercv.View.CvRow;
+import pl.lborowy.supercv.Fragment.ContactFragment;
+import pl.lborowy.supercv.Fragment.ExperienceFragment;
+import pl.lborowy.supercv.Fragment.SkillsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-//    public static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
@@ -48,49 +47,9 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
 
         // przechodzenie z menu do kontenrów
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-//                if (item.getItemId() == R.id.menu_contact) {
-//                    getSupportFragmentManager() //wspomaganie starszych wersji
-//                            .beginTransaction()
-//                            .replace(R.id.container, ContactFragment.newInstance())
-//                            .commit();
-//                }
-//                else if (item.getItemId() == R.id.menu_skills) {
-//                    getSupportFragmentManager() //wspomaganie starszych wersji
-//                            .beginTransaction()
-//                            .replace(R.id.container, SkillsFragment.newInstance())
-//                            .commit();
-//                }
-//                else if (item.getItemId() == R.id.menu_experience) {
-//
-//                }
-                toolbar.setTitle(item.getTitle()); // tytuł itemka
-                item.setChecked(true); // podswietla w menu itemki
-
-                switch (item.getItemId()) {
-                    case R.id.menu_contact:
-                        openFragment(ContactFragment.newInstance());
-
-                        break;
-                    case R.id.menu_skills:
-                        openFragment(SkillsFragment.newInstance());
-                        break;
-                    case R.id.menu_experience:
-                        openFragment(ExperienceFragment.newInstance());
-                        break;
-                }
-                drawerLayout.closeDrawer(Gravity.LEFT);
-
-                return false;
-            }
-        });
+        navigationView.setNavigationItemSelectedListener(this);
 
 //        openFragment(ContactFragment.newInstance());
-
-
 
 
 //        CvRow phoneRow = new CvRow(this, "(+48) 692 449 800", R.drawable.icc_local_phone_black_24dp);
@@ -131,14 +90,6 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().performIdentifierAction(R.id.menu_contact, 0);
     }
 
-    private void openFragment(Fragment fragment) {
-        // builder - zamien jedno z drugim i wywołaj
-        getSupportFragmentManager() //wspomaganie starszych wersji
-                .beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
-    }
-
     private void setupToolbar() {
         // nowy toolbar zajmuje się tak jak poprzedni
         setSupportActionBar(toolbar);
@@ -150,27 +101,52 @@ public class MainActivity extends AppCompatActivity {
         hamburger.syncState();
     }
 
-    public void makeCall() {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:(+48)692449800"));
-        startActivity(intent);
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.menu_contact) {
+//                    getSupportFragmentManager() //wspomaganie starszych wersji
+//                            .beginTransaction()
+//                            .replace(R.id.container, ContactFragment.newInstance())
+//                            .commit();
+//                }
+//                else if (item.getItemId() == R.id.menu_skills) {
+//                    getSupportFragmentManager() //wspomaganie starszych wersji
+//                            .beginTransaction()
+//                            .replace(R.id.container, SkillsFragment.newInstance())
+//                            .commit();
+//                }
+//                else if (item.getItemId() == R.id.menu_experience) {
+//
+//                }
+        toolbar.setTitle(item.getTitle()); // tytuł itemka
+        item.setChecked(true); // podswietla w menu itemki
+
+        openFragment(item);
+        drawerLayout.closeDrawer(Gravity.LEFT);
+        return false;
     }
 
 
-    public void sendMail() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        //nie zadziała, ponieważ String musi być tablicą (dokumanetacja)
-//        intent.putExtra(Intent.EXTRA_EMAIL, "mail@mail.com");
-        //zadziała
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mail@mail.com"});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Mail z mojego CV");
-        startActivity(intent);
+    private void openFragment(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_contact:
+                openFragment(ContactFragment.newInstance());
+                break;
+            case R.id.menu_skills:
+                openFragment(SkillsFragment.newInstance());
+                break;
+            case R.id.menu_experience:
+                openFragment(ExperienceFragment.newInstance());
+                break;
+        }
     }
 
-    public void openWebsite() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://google.com"));
-        startActivity(intent);
+    private void openFragment(Fragment fragment) {
+        // builder - zamien jedno z drugim i wywołaj
+        getSupportFragmentManager() //wspomaganie starszych wersji
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
+
 }

@@ -5,10 +5,16 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import pl.lborowy.supercv.Model.CVItem;
+import pl.lborowy.supercv.Model.MailItem;
+import pl.lborowy.supercv.Model.PhoneItem;
+import pl.lborowy.supercv.Model.WebItem;
 
 /**
  * Created by RENT on 2017-06-21.
@@ -17,14 +23,13 @@ import android.widget.TextView;
 public class CvRow extends LinearLayout {
     private final Context context;
     private final DisplayMetrics metrics;
-    private final String text;
-    private final int imageId;
+    private final CVItem cvItem;
 
-    public CvRow(Context context, String text, int imageId) {
+    public CvRow(final Context context, final CVItem cvItem) {
         super(context);
         this.context = context;
-        this.text = text;
-        this.imageId = imageId;
+        this.cvItem = cvItem;
+
 
         Resources resources = context.getResources();
         metrics = resources.getDisplayMetrics();
@@ -35,6 +40,19 @@ public class CvRow extends LinearLayout {
 
         addViews(imageView, textView);
 
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (cvItem instanceof PhoneItem)
+//                    ((PhoneItem) cvItem).makeCall(context);
+//                else if (cvItem instanceof MailItem)
+//                    ((MailItem) cvItem).sendMail(context);
+//                else if (cvItem instanceof WebItem)
+//                    ((WebItem) cvItem).openWebsite(context);
+                cvItem.makeAction(context);
+            }
+        });
     }
 
     private void addViews(ImageView imageView, TextView textView) {
@@ -45,7 +63,7 @@ public class CvRow extends LinearLayout {
     @NonNull
     private TextView createTextView() {
         TextView textView = new TextView(context);
-        textView.setText(text);
+        textView.setText(cvItem.getName()); // getText
         LayoutParams textParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         textView.setLayoutParams(textParams);
         textView.setTextSize(16);
@@ -57,7 +75,7 @@ public class CvRow extends LinearLayout {
     @NonNull
     private ImageView createImageView() {
         ImageView imageView = new ImageView(context);
-        imageView.setImageResource(imageId);
+        imageView.setImageResource(cvItem.getImageId());
         LayoutParams imageParams = new LayoutParams(dpToPx(24), dpToPx(24));
         imageParams.gravity = Gravity.CENTER_VERTICAL;
         imageView.setLayoutParams(imageParams);

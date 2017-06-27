@@ -23,6 +23,8 @@ import pl.lborowy.supercv.View.CvRow;
 public class ContactFragment extends Fragment {
 
 
+    public static final String TAG_WEB_ADSRESS = "google.com";
+
     @BindView(R.id.contactFragmentContainer)
     LinearLayout container;
 
@@ -87,7 +89,7 @@ public class ContactFragment extends Fragment {
 //        });
         container.addView(mailRow);
 
-        final WebItem webItem = new WebItem();
+        final WebItem webItem = new WebItem(TAG_WEB_ADSRESS);
         CvRow webRow = new CvRow(getActivity(), webItem);
 //        webRow.setOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.lborowy.supercv.Fragment.ContactFragment;
 import pl.lborowy.supercv.Fragment.ExperienceFragment;
+import pl.lborowy.supercv.Fragment.NotesFragment;
 import pl.lborowy.supercv.Fragment.SkillsFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -137,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_experience:
                 openFragment(ExperienceFragment.newInstance());
+                break;
+            case R.id.menu_notes:
+                openFragment(NotesFragment.newInstance());
                 break;
         }
     }

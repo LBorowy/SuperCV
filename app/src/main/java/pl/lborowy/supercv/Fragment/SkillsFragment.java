@@ -21,6 +21,7 @@ import pl.lborowy.supercv.View.CvRow;
 
 public class SkillsFragment extends Fragment {
 
+    public static final String TAG_WEB_ADDRESS = "google.com";
     @BindView(R.id.skillsFragmentContainer)
     LinearLayout container;
 
@@ -51,7 +52,7 @@ public class SkillsFragment extends Fragment {
         CvRow mailRow = new CvRow(getActivity(),mailItem);
         container.addView(mailRow);
 
-        WebItem webItem = new WebItem();
+        WebItem webItem = new WebItem(TAG_WEB_ADDRESS);
         CvRow webRow = new CvRow(getActivity(),webItem);
         container.addView(webRow);
     }

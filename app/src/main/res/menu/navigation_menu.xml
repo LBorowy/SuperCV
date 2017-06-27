@@ -18,5 +18,10 @@
         android:icon="@drawable/ic_computer_black_24dp"
         android:title="Doświadczenie" />
 
+        <item
+            android:id="@+id/menu_notes"
+            android:icon="@drawable/ic_backup_black_24dp"
+            android:title="Notatki"/>
+
     </group>
 </menu>

@@ -14,8 +14,8 @@ public class WebItem extends CVItem {
 
     public static final String WEB_ADDRESS = "google.com";
 
-    public WebItem() {
-        super(R.drawable.ic_public_black_24dp, WEB_ADDRESS);
+    public WebItem(String name) {
+        super(R.drawable.ic_public_black_24dp, name);
 
     }
 

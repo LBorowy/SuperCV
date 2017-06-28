@@ -84,7 +84,8 @@ public class NotesFragment extends Fragment {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(NOTE_KEY, notesToSave);
-        editor.apply();
+        editor.apply(); // zapisz zmiany asynchronicznie - lepsze dla wolnych telefonów (tworzy się
+        // drugi wątek podczas zapisywania Stringa)
 //        editor.commit(); // zapisz zmiany (synchronicznie)
     }
 

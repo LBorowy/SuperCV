@@ -19,8 +19,10 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.lborowy.supercv.Fragment.ContactFragment;
+import pl.lborowy.supercv.Fragment.EducationFragment;
 import pl.lborowy.supercv.Fragment.ExperienceFragment;
 import pl.lborowy.supercv.Fragment.NotesFragment;
+import pl.lborowy.supercv.Fragment.ProjectsFragment;
 import pl.lborowy.supercv.Fragment.SkillsFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -141,6 +143,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_notes:
                 openFragment(NotesFragment.newInstance());
+                break;
+            case R.id.menu_education:
+                openFragment(EducationFragment.newInstance());
+                break;
+            case R.id.menu_projects:
+                openFragment(ProjectsFragment.newInstance());
+                break;
+            case R.id.menu_hobby:
+                openFragment(ProjectsFragment.newInstance());
                 break;
         }
     }

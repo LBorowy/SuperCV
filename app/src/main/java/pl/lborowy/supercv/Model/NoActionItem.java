@@ -12,8 +12,9 @@ public class NoActionItem extends CVItem{
 
     public static final String TAG_NO_ACTION = "No Action";
 
-    public NoActionItem() {
-        super(R.drawable.ic_visibility_off_black_24dp, TAG_NO_ACTION);
+    public NoActionItem(String text) {
+        super(R.drawable.ic_visibility_off_black_24dp, text);
+
     }
 
     @Override

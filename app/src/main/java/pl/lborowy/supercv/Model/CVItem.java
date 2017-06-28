@@ -8,8 +8,8 @@ import android.content.Context;
 
 public abstract class CVItem {
 
-    private int imageId;
-    private String name;
+    protected int imageId;
+    protected String name;
 
     public CVItem(int imageId, String name) {
         this.imageId = imageId;

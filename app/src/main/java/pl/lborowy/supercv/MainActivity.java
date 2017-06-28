@@ -1,23 +1,28 @@
 package pl.lborowy.supercv;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import pl.lborowy.supercv.Fragment.ContactFragment;
 import pl.lborowy.supercv.Fragment.EducationFragment;
 import pl.lborowy.supercv.Fragment.ExperienceFragment;
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.snackbar_attach)
+    CoordinatorLayout snackBar;
     @BindView(R.id.container)
     FrameLayout container;
     @BindView(R.id.navigationView)
@@ -51,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // przechodzenie z menu do kontenrów
         navigationView.setNavigationItemSelectedListener(this);
+
+        // gdy klikamy w SNACKBARA
+//        onFloatActionButtonClicked();
 
 //        openFragment(ContactFragment.newInstance());
 
@@ -87,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @OnClick(R.id.fabContact)
+    public void onFloatActionButtonClicked() {
+//        Toast.makeText(this, "FloatActionButton2", Toast.LENGTH_SHORT).show();
+        Snackbar.make(snackBar, "Test", Snackbar.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -102,6 +118,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(hamburger);
         hamburger.syncState();
+    }
+
+    // do info
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //wypełniamy menu
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // LISTENER do INFO
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.options_info:
+                //// TODO: 2017-06-28 new dialog
+                showInfoDialog();
+//                Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("klauzula")
+                .setIcon(R.drawable.ic_check_black_24dp)
+                .setMessage("Wyrażam zgodę na....")
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss(); // zamyka dialog (tutaj klasa anonimowa)
+                    }
+                });
+
+//        builder.create().showInfoDialog();
+        //lub
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -163,5 +218,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .replace(R.id.container, fragment)
                 .commit();
     }
+
 
 }

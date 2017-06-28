@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.lborowy.supercv.Model.DialogItem;
 import pl.lborowy.supercv.Model.MailItem;
 import pl.lborowy.supercv.Model.PhoneItem;
 import pl.lborowy.supercv.Model.WebItem;
@@ -56,5 +57,9 @@ public class ExperienceFragment extends Fragment {
         WebItem webItem = new WebItem(TAG_WEB_ADDRESS);
         CvRow webRow = new CvRow(getActivity(),webItem);
         container.addView(webRow);
+
+        DialogItem dialogItem = new DialogItem(R.drawable.ic_explore_black_24dp, "SDA", "Java\nAndroid");
+        CvRow dialogRow = new CvRow(getActivity(), dialogItem);
+        container.addView(dialogRow);
     }
 }

@@ -1,6 +1,8 @@
 package pl.lborowy.supercv;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -106,7 +108,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @OnClick(R.id.fabContact)
     public void onFloatActionButtonClicked() {
 //        Toast.makeText(this, "FloatActionButton2", Toast.LENGTH_SHORT).show();
-        Snackbar.make(snackBar, "Test", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(snackBar, "Test", Snackbar.LENGTH_SHORT).show();
+        addToContacts();
+
+
+    }
+
+    private void addToContacts() {
+        // komunikacja między Activity  -> INTENT
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+//        intent.setType(ContactsContract.Contacts.CONTENT_TYPE); // zawartość kontaktu
+//        intent.putExtra(ContactsContract.Intents.Insert.NAME, "Imie i nazwisko");
+//        intent.putExtra(ContactsContract.Intents.Insert.PHONE, "12344");
+        intent.setType(ContactsContract.Contacts.CONTENT_TYPE)
+                .putExtra(ContactsContract.Intents.Insert.NAME, Constants.NAME)
+                .putExtra(ContactsContract.Intents.Insert.PHONE, "12344")
+                .putExtra(ContactsContract.Intents.Insert.EMAIL, "lol@gmail.com");
+
+        startActivity(intent);
     }
 
     @Override

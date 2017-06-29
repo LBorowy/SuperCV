@@ -27,6 +27,7 @@ import pl.lborowy.supercv.Fragment.ContactFragment;
 import pl.lborowy.supercv.Fragment.EducationFragment;
 import pl.lborowy.supercv.Fragment.ExperienceFragment;
 import pl.lborowy.supercv.Fragment.NotesFragment;
+import pl.lborowy.supercv.Fragment.PasswordFragment;
 import pl.lborowy.supercv.Fragment.ProjectsFragment;
 import pl.lborowy.supercv.Fragment.SkillsFragment;
 
@@ -52,12 +53,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // odpalanie XML'a z hasłem
+        PasswordFragment.newInstance().show(getSupportFragmentManager(), "");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setupToolbar();
 
         // przechodzenie z menu do kontenrów
         navigationView.setNavigationItemSelectedListener(this);
+
+        // odpalanie XML'a z hasłem
+//        PasswordFragment.newInstance().show(getSupportFragmentManager(), "");
 
         // gdy klikamy w SNACKBARA
 //        onFloatActionButtonClicked();

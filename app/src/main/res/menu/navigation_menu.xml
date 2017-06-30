@@ -5,38 +5,38 @@
         <item
             android:id="@+id/menu_contact"
             android:icon="@drawable/icc_local_phone_black_24dp"
-            android:title="Kontakt" />
+            android:title="@string/contact" />
 
         <item
             android:id="@+id/menu_skills"
             android:icon="@drawable/ic_build_black_24dp"
-            android:title="Umiejętności" />
+            android:title="@string/skills" />
 
 
         <item
             android:id="@+id/menu_experience"
             android:icon="@drawable/ic_computer_black_24dp"
-            android:title="Doświadczenie" />
+            android:title="@string/experience" />
 
         <item
             android:id="@+id/menu_education"
             android:icon="@drawable/ic_school_black_24dp"
-            android:title="Edukacja" />
+            android:title="@string/education" />
 
         <item
             android:id="@+id/menu_projects"
             android:icon="@drawable/ic_phone_android_black_24dp"
-            android:title="Projekty" />
+            android:title="@string/projects" />
 
         <item
             android:id="@+id/menu_hobby"
             android:icon="@drawable/ic_directions_bike_black_24dp"
-            android:title="Hobby" />
+            android:title="@string/hobby" />
 
         <item
             android:id="@+id/menu_notes"
             android:icon="@drawable/ic_backup_black_24dp"
-            android:title="Notatki" />
+            android:title="@string/notes" />
 
     </group>
 </menu>

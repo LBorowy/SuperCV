@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SuperCV</string>
+    <string name="contact">Kontakt</string>
+    <string name="hello_blank_fragment">Cześć pusty fragment</string>
+    <string name="education">Edukacja</string>
+    <string name="experience">Doświadczenie</string>
+    <string name="hobby">Hobby</string>
+    <string name="notes">Notatki</string>
+    <string name="projects">Projekty</string>
+    <string name="skills">Umiejętności</string>
+</resources>

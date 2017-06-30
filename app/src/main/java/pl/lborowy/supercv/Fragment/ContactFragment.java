@@ -1,10 +1,13 @@
 package pl.lborowy.supercv.Fragment;
 
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +15,22 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.lborowy.supercv.MainActivity;
 import pl.lborowy.supercv.Model.CVItem;
 import pl.lborowy.supercv.Model.MailItem;
+import pl.lborowy.supercv.Model.MessengerItem;
 import pl.lborowy.supercv.Model.PhoneItem;
 import pl.lborowy.supercv.Model.WebItem;
 import pl.lborowy.supercv.R;
+import pl.lborowy.supercv.SnackBarShower;
 import pl.lborowy.supercv.View.CvRow;
 
 
 public class ContactFragment extends Fragment {
+
+    //    private MainActivity mainActivity; // po interfejsie
+    // nazwa interfejsu
+    private SnackBarShower snackBarShower;
 
 
     public static final String TAG_WEB_ADSRESS = "google.com";
@@ -52,12 +62,24 @@ public class ContactFragment extends Fragment {
 ////        }
 //    }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        if (context instanceof MainActivity) // w przypadku gdyby byly inne Activity
+//            mainActivity = (MainActivity) context; // dzieki temu mozemy wywolac na mainActivity.showSnackBar();
+        // po interfejsie
+        // jesli kontekst jest instacja czegos co pokazuje snackbar, to moj adres do pokazywania snackbara bedzie kontekstem.
+        if (context instanceof SnackBarShower)
+            snackBarShower = (SnackBarShower) context;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
 //        LinearLayout container2 = view.findViewById(R.id.contactFragmentContainer);
 
@@ -98,8 +120,35 @@ public class ContactFragment extends Fragment {
 //            }
 //        });
         container.addView(webRow);
-    }
 
+
+        MessengerItem messengerItem = new MessengerItem();
+        CvRow messengerRow = new CvRow(getActivity(), messengerItem);
+        container.addView(messengerRow);
+
+        messengerRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // pokaz messengera
+                Uri uri = Uri.parse("fb-messenger://user/"); // wskazuje na aplikacje w kodzie
+                uri = ContentUris.withAppendedId(uri, 121526247868537L); // numer ze stronki + L
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    getActivity().startActivity(intent);
+                }
+                else {
+
+                    // snackbar
+                    // zeby wyjac MainActivity z FragmentActivity trzeba rzutować acti.cast
+//                   ((MainActivity) getActivity()).showSnackbar("Brak aplikacji Messenger"); // onAttach
+
+//                   mainActivity.showSnackBar("Brak aplikacji Messenger ;(");
+                    snackBarShower.showSnackBar("Brak aplikacji Messenger ;(");
+                }
+            }
+        }
+        );
+    }
 
 
 //
@@ -151,5 +200,12 @@ public class ContactFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://google.com"));
         startActivity(intent);
+    }
+
+    @Override // w momencie zamykania fragmentu (snackbara) garbageCollector usuwam go
+    public void onDetach() {
+        super.onDetach();
+//        mainActivity = null;
+        snackBarShower = null;
     }
 }

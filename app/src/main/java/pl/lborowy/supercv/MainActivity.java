@@ -33,7 +33,7 @@ import pl.lborowy.supercv.Fragment.PasswordFragment;
 import pl.lborowy.supercv.Fragment.ProjectsFragment;
 import pl.lborowy.supercv.Fragment.SkillsFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SnackBarShower {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -244,5 +244,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
     }
 
+    // komentuje po stworzeniu interfejsu SnackBarShower
+//    public void showSnackbar(String message) {
+//        Snackbar.make(snackBar, message, Snackbar.LENGTH_SHORT).show();
+//    }
 
+    @Override
+    public void showSnackBar(String message) {
+        Snackbar.make(snackBar, message, Snackbar.LENGTH_SHORT).show();
+    }
 }
